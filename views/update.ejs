@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include("./includes/headerlink.ejs") %> 
+</head>
+<body>
+		
+        <nav class="w-100 p-4 d-flex justify-content-between top-nav">
+            <div class="d-flex">
+                <img src="/images/dashboard.png" class="img-sm mr-2 my-auto">
+                <p id="dashboard" class="my-auto">Dashboard</p>
+            </div>
+            
+            <img src="images/logo.png" class="img-sm">
+        </nav>
+
+
+    <div class="allers d-flex w-100">    
+        <%- include("./includes/nav.ejs") %> 
+
+        <main class="main-in-add">
+            <div class="main-add-inner p-4">
+                <h2 class="mb-5">Update Product <i class="bx bx-link-alt"></i></h2>
+      	<% if(typeof product === "undefined"){ %> 
+            <form id="updateproduct" class="d-flex align-items-end">
+				<!-- Event submitted in dashboard.js -->
+            	 <div class="form-group mr-3">
+	                    <label for="id" class="form-label">Ref No.</label>
+	                    <input id="prodId" required type="text" class="form-control prodId form-input">
+	              </div>
+	              <div class="form-group">
+	              	<input class="form-control" type="submit">
+	              </div>
+            </form>
+		<% }else{ %> 
+				<form class="d-flex justify-content-between" method="post" action="/admin/updateproduct">
+                    <!--First Group-->
+	                    <div class="form-group w-50 pr-4">
+	                        <input id="ref" value="<%= product._id.toString() %>" hidden name="prodId" type="text">
+	                    
+	                        <div class="form-group mb-4">
+	                            <label class="form-label">Product</label>
+	                            <input value="<%= product.title %>" required name="title" class="form-control form-input">
+	                        </div>
+	                        
+	                        <div class="form-group d-flex justify-content-between">
+	                        	<div class="form-group w-50 pr-4">
+	                            	<label class="form-label">Unit Price</label>
+	                            	<input value="<%= product.unitprice %>" required name="unitprice" type="number" class="form-control form-input">
+	                        	</div>
+	                        	<div class="form-group w-50">
+	                            	<label class="form-label">Quantity</label>
+	                            	<input value="<%= product.quantity %>" required name="quantity" type="number" class="form-control form-input">
+	                        	</div>
+	                        </div> 
+							
+							<div class="form-group mb-4">
+	                            <label class="form-label">Image</label>
+	                            <input value="<%= product.imageurl %>" required name="imageurl" class="form-control form-input">
+	                        </div>
+	
+	                        <div class="form-group d-flex justify-content-between">
+	                            <!-- <div class="form-group mb-4 w-50 pr-4">
+	                                <label for="purchasestatus" class="form-label">Purchase Status</label>
+	                                <select id="purchasestatus" name="purchasestatus" class="form-control form-input">
+	                                    <option selected="selected" value=""></option>
+	                                    <option ${row.purchasestatus=="ordered"?"selected":""} value="ordered">Ordered</option>
+	                                    <option ${row.purchasestatus=="delivered"?"selected":""} value="delivered">Delivered</option>
+	                                </select>
+	                            </div> -->
+	                            <!-- <div class="form-group mb-4 w-50">
+	                                <label for="paymentstatus" class="form-label">Payment Status</label>
+	                                <select disabled="disabled" id="paymentstatus" name="paymentstatus" class="form-control form-input">
+	                                    <option ${row.paymentstatus=="unpaid"?"selected":""} value="unpaid">Unpaid</option>
+	                                    <option ${row.paymentstatus=="paid"?"selected":""} value="paid">Paid</option>
+	                                </select>
+	                            </div> -->
+	                        </div>
+	                    </div>
+	                    <!--End of First Group-->
+	                    <!--Second Group-->
+	                    <div class="form-group w-50">
+	                        <!-- <div class="form-group mb-4">
+	                            <label class="form-label">Paid Amount</label>
+	                            <input value="${row.paidamount+0}" required name="paidamount" type="number" class="form-control form-input" placeholder="$$">
+	                        </div> -->
+	                        <div class="form-group">
+	                            <label class="form-label">Description</label>
+	                            <textarea required name="description" rows="9" class="form-control form-input"><%= product.description %></textarea>
+	                        </div>
+	
+	                        <div class="form-group d-flex justify-content-end mt-5">
+	                            <button class="btn blue-bg text-white px-4 py-3 mr-3" type="submit">Update</button>
+	                            <button class="btn bg-dark text-white px-4 py-3" type="reset">Reset</button>
+	                        </div>
+	                    </div>
+                    <!--End of Second Group-->
+                </form>
+				<% } %> 
+            </div>
+
+        </main>
+    </div>
+    <script src="/js/jquery-slim.min.js"></script>
+    <script>
+		var prodId = document.getElementById("prodId")
+		document.querySelector("#updateproduct").addEventListener("submit", (e)=>{
+			e.preventDefault()
+			window.location.href = "/admin/updateproduct/"+prodId.value
+		})
+	</script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

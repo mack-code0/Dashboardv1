@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include("./includes/headerlink.ejs") %> 
+</head>
+<body>
+
+        <nav class="w-100 p-4 d-flex justify-content-between top-nav">
+            <div class="d-flex">
+                <img src="/images/dashboard.png" class="img-sm mr-2 my-auto">
+                <p id="dashboard" class="my-auto">Dashboard</p>
+            </div>
+            
+            <img src="images/logo.png" class="img-sm">
+        </nav>
+
+
+    <div class="allers d-flex w-100">    
+        <%- include("./includes/nav.ejs") %> 
+
+        <main class="main-in-add">
+
+            <div class="main-add-inner p-4">
+                <h2 class="mb-5">Add Product <i class="bx bxs-add-to-queue"></i></h2>
+            
+                <form class="d-flex justify-content-between" method="post" action="/admin/insertproduct">
+                    <!--First Group-->
+                    <div class="form-group w-50 pr-4">
+                        <div class="form-group mb-4">
+                            <label class="form-label">Product Title</label>
+                            <input required name="title" class="form-control form-input">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="form-label">Quantity</label>
+                            <input required name="quantity" type="number" class="form-control form-input">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="form-label">Unit Price</label>
+                            <input required name="unitprice" type="number" class="form-control form-input" placeholder="$$">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="form-label">Image</label>
+                            <input required name="imageurl" type="text" class="form-control form-input">
+                        </div>
+                    </div>
+                    <!--End of First Group-->
+                    <!--Second Group-->
+                    <div class="form-group w-50">
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea required name="description" rows="9" class="form-control form-input"></textarea>
+                        </div>
+
+                        <div class="form-group d-flex justify-content-end mt-5">
+                            <button class="btn blue-bg text-white px-4 py-3 mr-3" type="submit">Submit</button>
+                            <button class="btn bg-dark text-white px-4 py-3" type="reset">Reset</button>
+                        </div>
+                    </div>
+                    <!--End of Second Group-->
+                </form>
+            </div>
+
+        </main>
+    </div>
+    <script src="js/jquery-slim.min.js"></script>
+    
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
