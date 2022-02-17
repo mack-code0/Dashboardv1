@@ -13,6 +13,7 @@ const Store = new MongoDbStore({
 
 const app = express()
 
+
 app.set("view engine", "ejs")
 app.use(session({
     secret: "My Secret",
@@ -31,8 +32,8 @@ const PostRoutes = require("./routes/postRoutes")
 
 
 app.use(AuthRoutes)
-app.use(GetRoutes)
-app.use(PostRoutes)
+app.use("/admin", GetRoutes)
+app.use("/admin", PostRoutes)
 
 
 mongoConnect.mongoConnect(cb=>{

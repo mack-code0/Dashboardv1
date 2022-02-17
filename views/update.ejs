@@ -26,7 +26,7 @@
 	              </div>
             </form>
 		<% }else{ %> 
-				<form class="d-flex justify-content-between" method="post" action="/updateproduct">
+				<form class="d-flex justify-content-between" method="post" action="/admin/updateproduct">
                     <!--First Group-->
 	                    <div class="form-group w-50 pr-4">
 	                        <input id="ref" value="<%= product._id.toString() %>" hidden name="prodId" type="text">
@@ -100,7 +100,7 @@
 		console.log(prodId.value);
 		document.querySelector("#updateproduct").addEventListener("submit", (e)=>{
 			e.preventDefault()
-			window.location.href = "/updateproduct/"+prodId.value
+			window.location.href = "/admin/updateproduct/"+prodId.value
 		})
 	</script>
     <script src="/js/bootstrap.min.js"></script>

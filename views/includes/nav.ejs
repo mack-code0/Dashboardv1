@@ -1,22 +1,22 @@
 <nav class="side-nav d-flex flex-column align-items-center">
     <div class="d-flex justify-content-start px-3 pb-2 pt-5 w-75 border-bottom">
         <img src="/images/content.png" class="my-auto img-smm mr-2">
-        <p class="my-auto <%= pageUrl=='/'?'active':'' %>">
-            <a href="/">Dashboard</a>
+        <p class="my-auto <%= pageUrl=='/admin'?'active':'' %>">
+            <a href="/admin">Dashboard</a>
         </p>
     </div>
 
     <div class="d-flex justify-content-start px-3 pb-2 pt-5 w-75 border-bottom">
         <img src="/images/new.png" class="my-auto img-smm mr-2">
-        <p class="my-auto <%= pageUrl=='/add'?'active':'' %>">
-            <a href="/insertproduct">New Purchase</a>
+        <p class="my-auto <%= pageUrl=='/admin/add'?'active':'' %>">
+            <a href="/admin/insertproduct">New Purchase</a>
         </p>
     </div>
     
        <div class="d-flex justify-content-start px-3 pb-2 pt-5 w-75 border-bottom">
         <img src="/images/items (1).png" class="my-auto img-smm mr-2">
-        <p class="my-auto <%= pageUrl=='/update'?'active':'' %>">
-            <a href="/updateproduct">Update Purchase</a>
+        <p class="my-auto <%= pageUrl=='/admin/update'?'active':'' %>">
+            <a href="/admin/updateproduct">Update Purchase</a>
         </p>
     </div>
 
