@@ -7,7 +7,7 @@ const User = require("./models/user")
 const getDb = require("./util/database").db
 
 const Store = new MongoDbStore({
-    collection: "admin-store",
+    collection: "admin_sessions",
     uri: "mongodb://127.0.0.1:27017/dashboard"
 })
 
@@ -37,7 +37,7 @@ app.use(PostRoutes)
 
 mongoConnect.mongoConnect(cb=>{
     let db = getDb()
-    db.collection("admin_store").findOne()
+    db.collection("admin_users").findOne()
     .then(result=>{
         if(!result){
             const newUser = new User("Macaulay", "mac@email.com")

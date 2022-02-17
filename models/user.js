@@ -10,7 +10,7 @@ class User {
 
     static getUser(userId){
         let db = getDb()
-        db.collection("admin_store").find({_id: new mongoDb.ObjectId(userId)}).next()
+        return db.collection("admin_users").find({_id: new mongoDb.ObjectId(userId)}).next()
         .then(user=>{
             return user
         }).catch(err=>{
@@ -20,7 +20,7 @@ class User {
 
     save(){
         let db = getDb()
-        db.collection("admin_store").insertOne(this)
+        db.collection("admin_users").insertOne(this)
         .then(result=>{
             return {message: "Done"}
         }).catch(err=>{
