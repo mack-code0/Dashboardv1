@@ -10,13 +10,14 @@ exports.add = (req, res)=>{
     res.render("add", {pageUrl: "/add"})
 }
 
-exports.update = (req, res)=>{
+exports.updatePage = (req, res)=>{
+    res.render("update", {pageUrl: "/update"})
+}
+
+exports.updateWithId = (req, res)=>{
+    console.log(req.params);
     const { prodId } = req.params
     Product.getOneProduct(prodId, product =>{
         res.render("update", {pageUrl: "/update", product})
     })
-}
-
-exports.update_1 = (req, res)=>{
-    res.render("update", {pageUrl: "/update"})
 }

@@ -5,14 +5,7 @@
 </head>
 <body>
 		
-        <nav class="w-100 p-4 d-flex justify-content-between top-nav">
-            <div class="d-flex">
-                <img src="/images/dashboard.png" class="img-sm mr-2 my-auto">
-                <p id="dashboard" class="my-auto">Dashboard</p>
-            </div>
-            
-            <img src="images/logo.png" class="img-sm">
-        </nav>
+	<%- include('./includes/header.ejs') %> 
 
 
     <div class="allers d-flex w-100">    
@@ -33,7 +26,7 @@
 	              </div>
             </form>
 		<% }else{ %> 
-				<form class="d-flex justify-content-between" method="post" action="/admin/updateproduct">
+				<form class="d-flex justify-content-between" method="post" action="/updateproduct">
                     <!--First Group-->
 	                    <div class="form-group w-50 pr-4">
 	                        <input id="ref" value="<%= product._id.toString() %>" hidden name="prodId" type="text">
@@ -104,9 +97,10 @@
     <script src="/js/jquery-slim.min.js"></script>
     <script>
 		var prodId = document.getElementById("prodId")
+		console.log(prodId.value);
 		document.querySelector("#updateproduct").addEventListener("submit", (e)=>{
 			e.preventDefault()
-			window.location.href = "/admin/updateproduct/"+prodId.value
+			window.location.href = "/updateproduct/"+prodId.value
 		})
 	</script>
     <script src="/js/bootstrap.min.js"></script>

@@ -3,13 +3,16 @@ const getDb = require("./../util/database").db
 const getDate = require("../util/dateconstructor")
 
 class Product{
-    constructor(title, quantity, unitprice, description, imageurl){
+    constructor(title, quantity, unitprice, description, imageurl, category, tag){
         this.title = title,
         this.quantity = quantity,
         this.unitprice = unitprice,
         this.date = getDate(), 
         this.description = description,
-        this.imageurl = imageurl
+        this.imageurl = imageurl,
+        this.category = category,
+        this.tag = tag,
+        this.oldprice = 0
     }
 
     save(prodId, cb){
@@ -42,6 +45,7 @@ class Product{
         let db = getDb()
         db.collection("products").find({_id: new mongodb.ObjectId(prodId)}).next()
         .then(product=>{
+            console.log(product);
             cb(product)
         })
         .catch(err=>{

@@ -5,14 +5,7 @@
 </head>
 <body>
 
-        <nav class="w-100 p-4 d-flex justify-content-between top-nav">
-            <div class="d-flex">
-                <img src="/images/dashboard.png" class="img-sm mr-2 my-auto">
-                <p id="dashboard" class="my-auto">Dashboard</p>
-            </div>
-            
-            <img src="images/logo.png" class="img-sm">
-        </nav>
+        <%- include('./includes/header.ejs') %> 
 
 
     <div class="allers d-flex w-100">    
@@ -23,7 +16,7 @@
             <div class="main-add-inner p-4">
                 <h2 class="mb-5">Add Product <i class="bx bxs-add-to-queue"></i></h2>
             
-                <form class="d-flex justify-content-between" method="post" action="/admin/insertproduct">
+                <form class="d-flex justify-content-between" method="post" action="/insertproduct">
                     <!--First Group-->
                     <div class="form-group w-50 pr-4">
                         <div class="form-group mb-4">
