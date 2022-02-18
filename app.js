@@ -32,6 +32,12 @@ const PostRoutes = require("./routes/postRoutes")
 
 
 app.use(AuthRoutes)
+app.use("/admin", (req, res, next)=>{
+    if(!req.session.user){
+        return res.redirect("/login")
+    }
+    next()
+})
 app.use("/admin", GetRoutes)
 app.use("/admin", PostRoutes)
 

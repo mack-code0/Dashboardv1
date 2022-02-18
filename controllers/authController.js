@@ -10,7 +10,13 @@ exports.postLogin = (req, res)=>{
         req.session.user = user
         req.session.isAuthenticated = true
         req.session.save(err=>{
-            res.redirect("/")
+            res.redirect("/admin")
         })
+    })
+}
+
+exports.logout = (req, res)=>{
+    req.session.destroy(err=>{
+        res.redirect("/login")
     })
 }

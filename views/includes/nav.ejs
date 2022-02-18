@@ -29,8 +29,10 @@
 
     <div class="d-flex justify-content-start px-3 pb-2 pt-5 w-75 border-bottom">
         <img src="/images/logout.png" class="my-auto img-smm mr-2">
-        <p class="my-auto">
-            <a href="${pageContext.request.contextPath}/logoutuser">Logout</a>
-        </p>
+            <form class="my-auto" action="/logout" method="post">
+                <button style="background: none; border: none;" type="submit">
+                    <a>Logout</a>
+                </button>
+            </form>
     </div>
 </nav>
