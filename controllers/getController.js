@@ -2,22 +2,22 @@ const Product = require("../models/product")
 
 exports.dashboard = (req, res)=>{
     Product.getProducts(products=>{
-        res.render("dashboard", {pageUrl: "/admin", products})
+        res.render("dashboard", {pageUrl: "/", products})
     })
 }
 
 exports.add = (req, res)=>{
-    res.render("add", {pageUrl: "/admin/add"})
+    res.render("add", {pageUrl: "/add"})
 }
 
 exports.updatePage = (req, res)=>{
-    res.render("update", {pageUrl: "/admin/update"})
+    res.render("update", {pageUrl: "/update"})
 }
 
 exports.updateWithId = (req, res)=>{
     console.log(req.params);
     const { prodId } = req.params
     Product.getOneProduct(prodId, product =>{
-        res.render("update", {pageUrl: "/admin/update", product})
+        res.render("update", {pageUrl: "/update", product})
     })
 }

@@ -2,15 +2,16 @@ const express = require('express')
 const router = express.Router()
 
 const getController = require("../controllers/getController")
+const isAuth = require("../middleware/isAuth")
 
 
-router.get('/', getController.dashboard)
+router.get('/', isAuth, getController.dashboard)
 
-router.get("/insertproduct", getController.add)
+router.get("/insertproduct", isAuth, getController.add)
 
-router.get("/updateproduct", getController.updatePage)
+router.get("/updateproduct", isAuth, getController.updatePage)
 
-router.get("/updateproduct/:prodId", getController.updateWithId)
+router.get("/updateproduct/:prodId", isAuth, getController.updateWithId)
 
 
 module.exports  = router

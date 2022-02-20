@@ -3,6 +3,7 @@ const path = require("path")
 const session = require("express-session")
 const mongoConnect = require("./util/database")
 const MongoDbStore = require("connect-mongodb-session")(session)
+const csrf = require("csurf")
 const User = require("./models/user")
 const getDb = require("./util/database").db
 
@@ -10,6 +11,7 @@ const Store = new MongoDbStore({
     collection: "admin_sessions",
     uri: "mongodb://127.0.0.1:27017/dashboard"
 })
+const csrfProtection = csrf()
 
 const app = express()
 
@@ -21,8 +23,14 @@ app.use(session({
     saveUninitialized: false,
     store: Store
 }))
+app.use(csrfProtection)
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, "public")))
+app.use((req, res, next)=>{
+    res.locals.csrfToken = req.csrfToken()
+    next()
+})
 
 
 const AuthRoutes = require("./routes/authRoutes")
@@ -32,24 +40,10 @@ const PostRoutes = require("./routes/postRoutes")
 
 
 app.use(AuthRoutes)
-app.use("/admin", (req, res, next)=>{
-    if(!req.session.user){
-        return res.redirect("/login")
-    }
-    next()
-})
-app.use("/admin", GetRoutes)
-app.use("/admin", PostRoutes)
+app.use(GetRoutes)
+app.use(PostRoutes)
 
 
 mongoConnect.mongoConnect(cb=>{
-    let db = getDb()
-    db.collection("admin_users").findOne()
-    .then(result=>{
-        if(!result){
-            const newUser = new User("Macaulay", "mac@email.com")
-            newUser.save()
-        }
-        app.listen(3000)
-    })
+    app.listen(3000)
 })
