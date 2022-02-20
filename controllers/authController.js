@@ -2,11 +2,22 @@ const User = require("../models/user")
 const bcryptjs = require("bcryptjs")
 
 exports.getLogin = (req, res)=>{
-    res.render("auth/login", {path: "/login"})
+    const error = req.flash("error")
+    const errorMessage = error.length>0?error:null
+
+    const success = req.flash("success")
+    const successMessage = success.length>0?success:null
+    res.render("auth/login", {
+        path: "/login",
+        errorMessage: errorMessage,
+        successMessage: successMessage
+    })
 }
 
 exports.getSignup = (req, res)=>{
-    res.render("auth/signup", {path: "/signup"})
+    const error = req.flash("error")
+    const errorMessage = error.length>0?error:null
+    res.render("auth/signup", {path: "/signup", errorMessage: errorMessage} )
 }
 
 exports.postLogin = (req, res)=>{
@@ -15,6 +26,7 @@ exports.postLogin = (req, res)=>{
     .then(user=>{
         if(!user){
             // Invalid Credentials
+            req.flash("error", "Invalid Credentials!")
             return res.redirect("/login")
         }
 
@@ -22,13 +34,14 @@ exports.postLogin = (req, res)=>{
         .then(doMatch=>{
             if(!doMatch){
                 // Invalid Credentials
+                req.flash("error", "Invalid Credentials!")
                 return res.redirect("/login")
             }
 
             req.session.user = user
             req.session.isLoggedIn = true
             req.session.save(err=>{
-                res.redirect("/admin")
+                res.redirect("/")
             })
         })
     })
@@ -40,7 +53,8 @@ exports.postSignup = (req, res)=>{
     .then(user=>{
         if(user){
             // User already exists
-            return res.redirect("/login")
+            req.flash("error", "User already exists!")
+            return res.redirect("/signup")
         }
 
         return bcryptjs.hash(password, 12)
@@ -49,6 +63,7 @@ exports.postSignup = (req, res)=>{
             return newUser.save()
         })
         .then(result=>{
+            req.flash("success", "Account created successfully! ")
             return res.redirect("/login")
         })
     })

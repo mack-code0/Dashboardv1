@@ -5,8 +5,6 @@ const mongoConnect = require("./util/database")
 const MongoDbStore = require("connect-mongodb-session")(session)
 const csrf = require("csurf")
 const flash = require("connect-flash")
-const User = require("./models/user")
-const getDb = require("./util/database").db
 
 const Store = new MongoDbStore({
     collection: "admin_sessions",

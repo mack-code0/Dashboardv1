@@ -2,26 +2,11 @@
 <html>
 <head>
     <%- include('../includes/headerlink.ejs')  %> 
-    <style>
-    	.error-fixed{
-    		position: fixed;
-    		top: 0;
-    		left: 50%;
-    		transform: translateX(-50%);
-    	}
-    </style>
 </head>
 <body>
 
 
-<% if(errorMessage){ %> 
-	<div class="alert error-fixed alert-danger alert-dismissible fade show" role="alert">
-	  <strong><%= errorMessage %></strong>
-	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	    <span aria-hidden="true">&times;</span>
-	  </button>
-	</div>
-<% } %> 
+ 
 
 	    <main>
         <div class="w-50 mx-auto main my-5">
@@ -36,8 +21,12 @@
             </a>
 
              <p class="subtitle fancy mt-5 mb-4"><span>or</span></p>
-            
              <form method="post" action="/login">
+                 <% if(errorMessage){ %> 
+                    <%- include("../includes/message.ejs", {messageType: "danger"}) %> 
+                <% }else if(successMessage){ %> 
+                    <%- include("../includes/message.ejs", {messageType: "success"}) %> 
+                <% } %>
                  <div class="form-group">
                      <label for="email" class="form-label">Email</label>
                      <input id="email" type="email" name="email" class="form-control form-input">
