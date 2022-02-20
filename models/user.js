@@ -3,14 +3,14 @@ const getDb = require("../util/database").db
 
 
 class User {
-    constructor(name, email){
-        this.name = name,
+    constructor(email, password){
         this.email = email
+        this.password = password
     }
 
-    static getUser(userId){
+    static getUser(email){
         let db = getDb()
-        return db.collection("admin_users").find({_id: new mongoDb.ObjectId(userId)}).next()
+        return db.collection("admin_users").find({email: email}).next()
         .then(user=>{
             return user
         }).catch(err=>{
@@ -20,7 +20,7 @@ class User {
 
     save(){
         let db = getDb()
-        db.collection("admin_users").insertOne(this)
+        return db.collection("admin_users").insertOne(this)
         .then(result=>{
             return {message: "Done"}
         }).catch(err=>{

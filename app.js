@@ -4,6 +4,7 @@ const session = require("express-session")
 const mongoConnect = require("./util/database")
 const MongoDbStore = require("connect-mongodb-session")(session)
 const csrf = require("csurf")
+const flash = require("connect-flash")
 const User = require("./models/user")
 const getDb = require("./util/database").db
 
@@ -17,21 +18,24 @@ const app = express()
 
 
 app.set("view engine", "ejs")
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.static(path.join(__dirname, "public")))
 app.use(session({
     secret: "My Secret",
     resave: false,
     saveUninitialized: false,
     store: Store
 }))
+app.use(flash())
 app.use(csrfProtection)
 
-app.use(express.urlencoded({extended: true}))
-app.use(express.static(path.join(__dirname, "public")))
+
 app.use((req, res, next)=>{
+    res.locals.isAuthenticated = req.session.isLoggedIn
     res.locals.csrfToken = req.csrfToken()
     next()
 })
-
 
 const AuthRoutes = require("./routes/authRoutes")
 const GetRoutes = require("./routes/getRoutes")
