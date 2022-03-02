@@ -1,77 +1,103 @@
 const User = require("../models/user")
 const bcryptjs = require("bcryptjs")
+const { validationResult } = require("express-validator")
 
-exports.getLogin = (req, res)=>{
+exports.getLogin = (req, res) => {
     const error = req.flash("error")
-    const errorMessage = error.length>0?error:null
+    const errorMessage = error.length > 0 ? error : null
 
     const success = req.flash("success")
-    const successMessage = success.length>0?success:null
+    const successMessage = success.length > 0 ? success : null
     res.render("auth/login", {
         path: "/login",
         errorMessage: errorMessage,
-        successMessage: successMessage
+        successMessage: successMessage,
+        oldInput: { email: "" },
+        validationErrors: []
     })
 }
 
-exports.getSignup = (req, res)=>{
+exports.getSignup = (req, res) => {
     const error = req.flash("error")
-    const errorMessage = error.length>0?error:null
-    res.render("auth/signup", {path: "/signup", errorMessage: errorMessage} )
+    const errorMessage = error.length > 0 ? error : null
+    res.render("auth/signup", {
+        path: "/signup",
+        errorMessage: errorMessage,
+        oldInput: { email: "" },
+        validationErrors: []
+    })
 }
 
-exports.postLogin = (req, res)=>{
-    const {email, password} = req.body
-    User.getUser(email)
-    .then(user=>{
-        if(!user){
-            // Invalid Credentials
-            req.flash("error", "Invalid Credentials!")
-            return res.redirect("/login")
-        }
+exports.postLogin = (req, res) => {
+    const { email, password } = req.body
 
-        bcryptjs.compare(password, user.password)
-        .then(doMatch=>{
-            if(!doMatch){
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.render("auth/login", {
+            path: "/login",
+            errorMessage: errors.array()[0].msg,
+            successMessage: "",
+            oldInput: { email },
+            validationErrors: errors.array()
+        })
+    }
+
+    User.getUser(email)
+        .then(user => {
+            if (!user) {
                 // Invalid Credentials
-                req.flash("error", "Invalid Credentials!")
+                req.flash("error", "Email is not registered!")
                 return res.redirect("/login")
             }
 
-            req.session.user = user
-            req.session.isLoggedIn = true
-            req.session.save(err=>{
-                res.redirect("/")
-            })
+            bcryptjs.compare(password, user.password)
+                .then(doMatch => {
+                    if (!doMatch) {
+                        // Invalid Credentials
+                        req.flash("error", "Invalid Credentials!")
+                        return res.redirect("/login")
+                    }
+
+                    req.session.user = user
+                    req.session.isLoggedIn = true
+                    req.session.save(err => {
+                        res.redirect("/")
+                    })
+                })
         })
-    })
+        .catch(err => { console.log(err); })
 }
 
-exports.postSignup = (req, res)=>{
-    const {email, password, confirmPassword} = req.body
-    User.getUser(email)
-    .then(user=>{
-        if(user){
-            // User already exists
-            req.flash("error", "User already exists!")
-            return res.redirect("/signup")
-        }
 
-        return bcryptjs.hash(password, 12)
-        .then(hashedPassword=>{
+exports.postSignup = (req, res) => {
+    const { email, password, confirmPassword } = req.body
+
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.render("auth/signup", {
+            path: "/signup",
+            errorMessage: errors.array()[0].msg,
+            oldInput: { email },
+            validationErrors: errors.array()
+        })
+    }
+
+
+
+    return bcryptjs.hash(password, 12)
+        .then(hashedPassword => {
             const newUser = new User(email, hashedPassword)
             return newUser.save()
         })
-        .then(result=>{
+        .then(result => {
             req.flash("success", "Account created successfully! ")
             return res.redirect("/login")
         })
-    })
-    .catch(err=>{console.log(err);})
+        .catch(err => { console.log(err); })
 }
 
-exports.logout = (req, res)=>{
-    req.session.destroy(err=>{
+exports.logout = (req, res) => {
+    req.session.destroy(err => {
         res.redirect("/login")
     })
 }

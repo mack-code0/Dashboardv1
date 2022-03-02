@@ -1,13 +1,12 @@
 const mongodb = require("mongodb")
 const getDb = require("./../util/database").db
-const getDate = require("../util/dateconstructor")
 
 class Product{
     constructor(title, quantity, unitprice, description, imageurl, category, tag){
         this.title = title,
         this.quantity = quantity,
         this.unitprice = unitprice,
-        this.date = getDate(), 
+        this.date = Date.now(), 
         this.description = description,
         this.imageurl = imageurl,
         this.category = category,
