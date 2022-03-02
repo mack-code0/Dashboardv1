@@ -20,28 +20,39 @@
                     <!--First Group-->
                     <div class="form-group w-50 pr-4">
                         <div class="form-group mb-4">
-                            <label class="form-label">Product Title</label>
-                            <input required name="title" class="form-control form-input">
+                            <label class="form-label" for="product-title">Product Title</label>
+                            <input required id="product-title" name="title" class="form-control form-input">
                         </div>
                         <div class="form-group mb-4">
-                            <label class="form-label">Quantity</label>
-                            <input required name="quantity" type="number" class="form-control form-input">
+                            <label class="form-label" for="product-quantity">Quantity</label>
+                            <input required id="product-quantity" name="quantity" type="number" class="form-control form-input">
                         </div>
                         <div class="form-group mb-4">
-                            <label class="form-label">Unit Price</label>
-                            <input required name="unitprice" type="number" class="form-control form-input" placeholder="$$">
+                            <label class="form-label" for="unit-price">Unit Price</label>
+                            <input required id="unit-price" name="unitprice" type="number" class="form-control form-input" placeholder="$$">
                         </div>
                         <div class="form-group mb-4">
-                            <label class="form-label">Image</label>
-                            <input required name="imageurl" type="text" class="form-control form-input">
+                            <label class="form-label" for="product-image">Image</label>
+                            <input required id="product-image" name="imageurl" type="text" class="form-control form-input">
                         </div>
                     </div>
                     <!--End of First Group-->
                     <!--Second Group-->
                     <div class="form-group w-50">
                         <div class="form-group">
-                            <label class="form-label">Description</label>
-                            <textarea required name="description" rows="9" class="form-control form-input"></textarea>
+                            <label class="form-label" for="product-description">Description</label>
+                            <textarea required id="product-description" name="description" rows="9" class="form-control form-input"></textarea>
+                        </div>
+
+                        <div class="form-group d-flex justify-content-between">
+                            <div class="form-group mb-4 w-50 pr-4">
+                                <label for="product-tag" class="form-label">Product Tag</label>
+                                <input required id="product-tag" name="tag" type="text" class="form-control form-input">
+                            </div>
+                            <div class="form-group mb-4 w-50">
+                                <label for="product-category" class="form-label">Product Category</label>
+                                <input required id="product-category" name="category" type="text" class="form-control form-input">
+                            </div>
                         </div>
 
                         <div class="form-group d-flex justify-content-end mt-5">

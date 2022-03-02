@@ -11,13 +11,14 @@ class Product{
         this.imageurl = imageurl,
         this.category = category,
         this.tag = tag,
-        this.oldprice = 0
+        this.oldprice = ""
     }
 
-    save(prodId, cb){
+    save(prodId, oldprice, cb){
         const db = getDb()
         let dbOp;
         if(prodId){
+            this.oldprice = oldprice
             dbOp = db.collection("products").updateOne({_id: new mongodb.ObjectId(prodId)}, {$set: {...this}})
         }else{
             dbOp = db.collection("products").insertOne(this)
@@ -44,11 +45,12 @@ class Product{
         let db = getDb()
         db.collection("products").find({_id: new mongodb.ObjectId(prodId)}).next()
         .then(product=>{
-            console.log(product);
             cb(product)
         })
         .catch(err=>{
-            cb(err)
+            if(err){
+                console.log("An error occured");
+            }
         })
     }
 
