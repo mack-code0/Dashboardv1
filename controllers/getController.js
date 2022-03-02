@@ -26,7 +26,7 @@ exports.updateWithId = (req, res) => {
     const { prodId } = req.params
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        return res.render("update", {
+        return res.status(422).render("update", {
             pageUrl: "/update",
             errorMessage: errors.array()[0].msg,
             oldInput: { prodId }

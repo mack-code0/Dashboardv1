@@ -33,7 +33,7 @@ document.querySelectorAll(".stow").forEach(element => {
             if (result.value) {
                 io();
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                window.location.href = "/admin/updateproduct/"+prod_ref+"";
+                window.location.href = "/updateproduct/"+prod_ref+"";
             }
         })
     })
