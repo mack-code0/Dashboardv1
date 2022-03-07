@@ -1,73 +1,89 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <%- include("./includes/headerlink.ejs") %> 
+    <%- include("./includes/headerlink.ejs") %>
 </head>
+
 <body>
 
-        <%- include('./includes/header.ejs') %> 
+    <%- include('./includes/header.ejs') %>
 
 
-    <div class="allers d-flex w-100">    
-        <%- include("./includes/nav.ejs") %> 
+        <div class="allers d-flex w-100">
+            <%- include("./includes/nav.ejs") %>
 
-        <main class="main-in-add">
+                <main class="main-in-add">
 
-            <div class="main-add-inner p-4">
-                <h2 class="mb-5">Add Product <i class="bx bxs-add-to-queue"></i></h2>
-            
-                <form class="d-flex justify-content-between" method="post" action="/insertproduct">
-                    <!--First Group-->
-                    <div class="form-group w-50 pr-4">
-                        <div class="form-group mb-4">
-                            <label class="form-label" for="product-title">Product Title</label>
-                            <input required id="product-title" name="title" class="form-control form-input">
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="form-label" for="product-quantity">Quantity</label>
-                            <input required id="product-quantity" name="quantity" type="number" class="form-control form-input">
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="form-label" for="unit-price">Unit Price</label>
-                            <input required id="unit-price" name="unitprice" type="number" class="form-control form-input" placeholder="$$">
-                        </div>
-                        <div class="form-group mb-4">
-                            <label class="form-label" for="product-image">Image</label>
-                            <input required id="product-image" name="imageurl" type="text" class="form-control form-input">
-                        </div>
+                    <div class="main-add-inner p-4">
+                        <h2 class="mb-5">Add Product <i class="bx bxs-add-to-queue"></i></h2>
+                        <% if(errorMessage){ %>
+                            <%- include("./includes/message.ejs", {messageType: "danger" , successMessage: "" }) %>
+                                <% } %>
+                                    <form class="d-flex justify-content-between" method="post" action="/insertproduct">
+                                        <!--First Group-->
+                                        <div class="form-group w-50 pr-4">
+                                            <div class="form-group mb-4">
+                                                <label class="form-label" for="product-title">Product Title</label>
+                                                <input value="<%= oldInput.title %>" required id="product-title" name="title"
+                                                    class="form-control form-input">
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label class="form-label" for="product-quantity">Quantity</label>
+                                                <input value="<%= oldInput.quantity %>" required id="product-quantity" name="quantity" type="number"
+                                                    class="form-control form-input">
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label class="form-label" for="unit-price">Unit Price</label>
+                                                <input value="<%= oldInput.unitprice %>" required id="unit-price" name="unitprice" type="number"
+                                                    class="form-control form-input" placeholder="$$">
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label class="form-label" for="product-image">Image</label>
+                                                <input value="<%= oldInput.imageurl %>" required id="product-image" name="imageurl" type="text"
+                                                    class="form-control form-input">
+                                            </div>
+                                        </div>
+                                        <!--End of First Group-->
+                                        <!--Second Group-->
+                                        <div class="form-group w-50">
+                                            <div class="form-group">
+                                                <label class="form-label" for="product-description">Description</label>
+                                                <textarea required id="product-description" name="description" rows="9"
+                                                    class="form-control form-input"><%= oldInput.description %></textarea>
+                                            </div>
+
+                                            <div class="form-group d-flex justify-content-between">
+                                                <div class="form-group mb-4 w-50 pr-4">
+                                                    <label for="product-tag" class="form-label">Product Tag</label>
+                                                    <input value="<%= oldInput.tag %>" required id="product-tag" name="tag" type="text"
+                                                        class="form-control form-input">
+                                                </div>
+                                                <div class="form-group mb-4 w-50">
+                                                    <label for="product-category" class="form-label">Product
+                                                        Category</label>
+                                                    <input value="<%= oldInput.category %>" required id="product-category" name="category" type="text"
+                                                        class="form-control form-input">
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <div class="form-group d-flex justify-content-end mt-5">
+                                                <button class="btn blue-bg text-white px-4 py-3 mr-3"
+                                                    type="submit">Submit</button>
+                                                <button class="btn bg-dark text-white px-4 py-3"
+                                                    type="reset">Reset</button>
+                                            </div>
+                                        </div>
+                                        <!--End of Second Group-->
+                                    </form>
                     </div>
-                    <!--End of First Group-->
-                    <!--Second Group-->
-                    <div class="form-group w-50">
-                        <div class="form-group">
-                            <label class="form-label" for="product-description">Description</label>
-                            <textarea required id="product-description" name="description" rows="9" class="form-control form-input"></textarea>
-                        </div>
 
-                        <div class="form-group d-flex justify-content-between">
-                            <div class="form-group mb-4 w-50 pr-4">
-                                <label for="product-tag" class="form-label">Product Tag</label>
-                                <input required id="product-tag" name="tag" type="text" class="form-control form-input">
-                            </div>
-                            <div class="form-group mb-4 w-50">
-                                <label for="product-category" class="form-label">Product Category</label>
-                                <input required id="product-category" name="category" type="text" class="form-control form-input">
-                            </div>
-                        </div>
+                </main>
+        </div>
+        <script src="js/jquery-slim.min.js"></script>
 
-                        <div class="form-group d-flex justify-content-end mt-5">
-                            <button class="btn blue-bg text-white px-4 py-3 mr-3" type="submit">Submit</button>
-                            <button class="btn bg-dark text-white px-4 py-3" type="reset">Reset</button>
-                        </div>
-                    </div>
-                    <!--End of Second Group-->
-                </form>
-            </div>
-
-        </main>
-    </div>
-    <script src="js/jquery-slim.min.js"></script>
-    
-    <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
 </body>
+
 </html>

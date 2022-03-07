@@ -8,7 +8,14 @@ exports.dashboard = (req, res) => {
 }
 
 exports.add = (req, res) => {
-    res.render("add", { pageUrl: "/add" })
+    const error = req.flash("error")
+    const errorMessage = error.length > 0 ? error : null
+
+    res.render("add", {
+        pageUrl: "/add",
+        errorMessage,
+        oldInput: { title: "", quantity: "", unitprice: "", description: "", imageurl: "", tag: "", category: "" }
+    })
 }
 
 exports.updatePage = (req, res) => {
