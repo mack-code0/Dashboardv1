@@ -50,7 +50,9 @@ Router.post("/updateproduct",
     check("description").isLength({ min: 10 }).withMessage("Product Description must be at least 10 characters long!"),
     PostController.updateProduct)
 
-Router.post("/deleteproduct", isAuth, PostController.deleteProduct)
+Router.post("/deleteproduct", isAuth,
+check("prodId", "Invalid Credentials").isByteLength({ min: 12 }).isMongoId(),
+PostController.deleteProduct)
 
 
 module.exports = Router

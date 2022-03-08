@@ -14,7 +14,7 @@ class Product{
         this.oldprice = ""
     }
 
-    save(prodId, oldprice, cb){
+    save(next, prodId, oldprice, cb){
         const db = getDb()
         let dbOp;
         if(prodId){
@@ -25,43 +25,47 @@ class Product{
         }
         dbOp.then((result) => {
             cb(result)
-        }).catch((err) => {
-           cb(err) 
-        });
+        }).catch(err => {
+            const error = new Error(err)
+            err.httpStatusCode = 500
+            next(error)
+        })
     }
 
-    static getProducts(cb){
+    static getProducts(next, cb){
         const db = getDb()
         db.collection("products").find().toArray()
         .then(result=>{
             cb(result)
-        })
-        .catch(err=>{
-            cb(err)
+        }).catch(err => {
+            const error = new Error(err)
+            err.httpStatusCode = 500
+            next(error)
         })
     }
 
-    static getOneProduct(prodId, cb){
+    static getOneProduct(next, prodId, cb){
         let db = getDb()
         db.collection("products").find({_id: new mongodb.ObjectId(prodId)}).next()
         .then(product=>{
             cb(product)
-        })
-        .catch(err=>{
-            if(err){
-                console.log("An error occured");
-            }
+        }).catch(err => {
+            const error = new Error(err)
+            err.httpStatusCode = 500
+            next(error)
         })
     }
 
-    static deleteProduct(prodId, cb){
+    static deleteProduct(next, prodId, cb){
         const db = getDb()
         db.collection("products").deleteOne({_id: new mongodb.ObjectId(prodId)})
         .then((result) => {
             cb(result)
-        }).catch((err) => {
-            cb(err)
-        });
+        }).catch(err => {
+            const error = new Error(err)
+            err.httpStatusCode = 500
+            next(error)
+        })
     }
 }
 

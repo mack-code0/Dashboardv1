@@ -10,6 +10,7 @@ exports.getLogin = (req, res) => {
     const successMessage = success.length > 0 ? success : null
     res.render("auth/login", {
         path: "/login",
+        pageTitle: "Login",
         errorMessage: errorMessage,
         successMessage: successMessage,
         oldInput: { email: "" },
@@ -22,6 +23,7 @@ exports.getSignup = (req, res) => {
     const errorMessage = error.length > 0 ? error : null
     res.render("auth/signup", {
         path: "/signup",
+        pageTitle: "Signup",
         errorMessage: errorMessage,
         oldInput: { email: "" },
         validationErrors: []
@@ -65,7 +67,11 @@ exports.postLogin = (req, res) => {
                     })
                 })
         })
-        .catch(err => { console.log(err); })
+        .catch(err => {
+            const error = new Error(err)
+            err.httpStatusCode = 500
+            next(error)
+        })
 }
 
 
@@ -92,8 +98,11 @@ exports.postSignup = (req, res) => {
         .then(result => {
             req.flash("success", "Account created successfully! ")
             return res.redirect("/login")
+        }).catch(err => {
+            const error = new Error(err)
+            err.httpStatusCode = 500
+            next(error)
         })
-        .catch(err => { console.log(err); })
 }
 
 exports.logout = (req, res) => {

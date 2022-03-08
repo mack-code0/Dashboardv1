@@ -60,9 +60,9 @@ function io(){
     }).then((result) => {
         if (result.value) {
         	$.ajax({
-        		url: "/admin/deleteproduct",
+        		url: "/deleteproduct",
         		type: "post",
-        		data: {prodId : outer_prod_ref},
+        		data: {prodId : outer_prod_ref, _csrf: document.querySelector(".csrf_token").value},
         		success: function(){
                     swalWithBootstrapButtons.fire(
                             'Deleted!',
