@@ -23,7 +23,7 @@ Router.post("/insertproduct",
         return true
     }),
     check("description").isLength({ min: 10 }).withMessage("Product Description must be at least 10 characters long!"),
-    check("tag").isLength({ min: 2 }).withMessage("Product Tag must be at least 2 characters long!"),
+    check("tag").isString(),
     check("category").isLength({ min: 2 }).withMessage("Product Category must be at least 2 characters long!"),
     PostController.insertProduct)
 

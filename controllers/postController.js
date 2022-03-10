@@ -12,13 +12,23 @@ cloudinary.config({
 exports.insertProduct = (req, res, next) => {
     const { title, quantity, unitprice, description, tag, category } = req.body
     const image = req.file
-    
+    const imagesize = image.size * 0.000001;
+
     const errors = validationResult(req)
-    if (!errors.isEmpty() || !image) {
+    if (!errors.isEmpty() || !image || imagesize>3) {
+        let errorMessage;
+        if(!errors.isEmpty()){
+            errorMessage = errors.array()[0].msg
+        }else if(!image){
+            errorMessage = "Please select an Image"
+        }else if(imagesize>3){
+            errorMessage = "Images must be less than 3mb"
+        }
+
         return res.status(422).render("add", {
             pageUrl: "/add",
             pageTitle: "Add Product",
-            errorMessage: typeof image === "undefined" ? "Please select an Image" : errors.array()[0].msg,
+            errorMessage: errorMessage,
             oldInput: { title, quantity, unitprice, description, tag, category }
         })
     }
