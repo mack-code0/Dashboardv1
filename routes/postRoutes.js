@@ -1,8 +1,10 @@
 const express = require('express')
 const { check } = require('express-validator')
+const multer = require('multer')
 
 const Router = express.Router()
 const PostController = require("../controllers/postController")
+const getImage = require('../middleware/getImage')
 const isAuth = require("../middleware/isAuth")
 
 Router.post("/insertproduct",
@@ -20,7 +22,6 @@ Router.post("/insertproduct",
         }
         return true
     }),
-    check("imageurl").isLength({ min: 2 }).withMessage("Product Image url must be at least 2 characters long!"),
     check("description").isLength({ min: 10 }).withMessage("Product Description must be at least 10 characters long!"),
     check("tag").isLength({ min: 2 }).withMessage("Product Tag must be at least 2 characters long!"),
     check("category").isLength({ min: 2 }).withMessage("Product Category must be at least 2 characters long!"),
@@ -44,8 +45,7 @@ Router.post("/updateproduct",
     check("quantity")
         .isLength({ min: 1 }).withMessage("Quantity Field cannot be empty!")
         .isNumeric().withMessage("Quantity must be numbers!"),
-    check("imageurl").isLength({ min: 2 }).withMessage("Product Image url must be at least 2 characters long!"),
-    check("tag").isLength({ min: 2 }).withMessage("Product Tag must be at least 2 characters long!"),
+    check("tag").isString(),
     check("category").isLength({ min: 2 }).withMessage("Product Category must be at least 2 characters long!"),
     check("description").isLength({ min: 10 }).withMessage("Product Description must be at least 10 characters long!"),
     PostController.updateProduct)
